@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Coffee</title>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif, sans-serif;
+            background-color: #532E1C;
+            color: #E6E6E6;
+        }
+
+        header {
+            position: sticky;
+            top: 0;
+            background-color: #0F0F0F;
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1000;
+        }
+
+        /* HERO */
+        .hero {
+            position: relative;
+            height: 90vh;
+            background-image: url('src/HeroBackground.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .hero button {
+            background-color: #0F0F0F;
+            color: #E6E6E6;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .hero button:hover {
+            background-color: #2A2A2A;
+        }
+
+        .logo-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background-color: #E6E6E6;
+            border-radius: 8px;
+        }
+
+        h1 {
+            margin: 0;
+            color: #E6E6E6;
+            font-size: 1.8rem;
+        }
+
+        .search-container {
+            flex: 1;
+            margin-left: 2rem;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .search-container input {
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: none;
+            max-width: 300px;
+            width: 100%;
+        }
+
+        .gallery {
+            display: grid;
+            gap: 1rem;
+            padding-right: 7rem;
+            padding-left: 7rem;
+            padding-top: 4rem;
+            grid-template-columns: repeat(1, 1fr);
+        }
+
+        @media (min-width: 600px) {
+            .gallery {
+                grid-template-columns: repeat(2, 1fr);
+                padding-right: 4rem;
+                padding-left: 4rem;
+                padding-top: 2rem;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .gallery {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .card {
+            background-color: #C5A880;
+            border-radius: 15px;
+            overflow: hidden;
+            text-align: center;
+            color: #000;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: scale(1.03);
+        }
+
+        .card img {
+            width: 100%;
+            display: block;
+        }
+
+        .card p {
+            margin: 0.5rem 0;
+            font-weight: bold;
+            text-transform: capitalize;
+        }
+
+        footer {
+            background-color: #0F0F0F;
+            color: #E6E6E6;
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo-title">
+            <img src="src/iconDark.png" class="logo">
+            <h1>Premium Coffee</h1>
+        </div>
+        <div class="search-container">
+            <input type="text" id="search" placeholder="Search...">
+        </div>
+        <link rel="icon" type="image/png" sizes="16x16" href="src/favicon_io/favicon-16x16.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="src/favicon_io/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="48x48" href="src/favicon_io/android-chrome-192x192.png">
+        <link rel="icon" type="image/png" sizes="96x96" href="src/favicon_io/android-chrome-512x512.png">
+        <link rel="apple-touch-icon" sizes="180x180" href="src/favicon_io/apple-touch-icon.png">
+        <link rel="shortcut icon" href="src/favicon_io/favicon-32x32.png" type="image/png">
+
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h2>Welcome to Premium Coffee</h2>
+            <p>Experience the finest flavors and highest quality in every cup!</p>
+            <button id="btnCatalogo">View Catalog</button>
+        </div>
+    </section>
+
+
+    <div class="gallery" id="gallery"></div>
+
+    <footer>
+        <p>&copy; 2025 Premium Coffee. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const btnCatalogo = document.getElementById('btnCatalogo');
+        btnCatalogo.addEventListener('click', () => {
+            const gallery = document.getElementById('gallery');
+            const targetPosition = gallery.getBoundingClientRect().top + window.pageYOffset;
+            const startPosition = window.pageYOffset;
+            const distance = targetPosition - startPosition;
+            const duration = 1200; // duración en ms
+            let start = null;
+
+            function step(timestamp) {
+                if (!start) start = timestamp;
+                const progress = timestamp - start;
+                const percent = Math.min(progress / duration, 1);
+                window.scrollTo(0, startPosition + distance * easeInOutCubic(percent));
+                if (progress < duration) {
+                    window.requestAnimationFrame(step);
+                }
+            }
+
+            function easeInOutCubic(t) {
+                return t < 0.5
+                    ? 4 * t * t * t
+                    : 1 - Math.pow(-2 * t + 2, 3) / 2;
+            }
+
+            window.requestAnimationFrame(step);
+        });
+    </script>
+
+
+    <script>
+        const gallery = document.getElementById("gallery");
+        const searchInput = document.getElementById("search");
+
+        //LOAD FROM SERVER
+        async function loadImages() {
+            const res = await fetch("/images");
+            const images = await res.json();
+            renderGallery(images);
+        }
+
+        function renderGallery(images) {
+            gallery.innerHTML = "";
+            images.forEach(img => {
+                const name = img.replace(/\.[^/.]+$/, ""); //REMOVE IMAGE EXTENSION
+                const card = document.createElement("div");
+                card.classList.add("card");
+                card.innerHTML = `<img src="images/${img}" alt="${name}"><p>${name}</p>`;
+                gallery.appendChild(card);
+            });
+        }
+
+        //FILTER
+        searchInput.addEventListener("input", () => {
+            const query = searchInput.value.toLowerCase();
+            let anyVisible = false; // para saber si alguna tarjeta coincide
+
+            document.querySelectorAll(".card").forEach(card => {
+                const name = card.querySelector("p").textContent.toLowerCase();
+                if (name.includes(query)) {
+                    card.style.display = "block";
+                    anyVisible = true;
+                } else {
+                    card.style.display = "none";
+                }
+            });
+
+            // Mostrar mensaje si no hay coincidencias
+            let noResults = document.getElementById("no-results");
+            if (!noResults) {
+                noResults = document.createElement("p");
+                noResults.id = "no-results";
+                noResults.style.textAlign = "center";
+                noResults.style.color = "#fff"; // o el color que quieras
+                noResults.style.marginTop = "1rem";
+                gallery.parentNode.insertBefore(noResults, gallery.nextSibling);
+            }
+
+            noResults.textContent = anyVisible ? "" : "No se encontraron productos que coincidan con tu búsqueda.";
+        });
+        //AUTO UPDATE 
+        const ws = new WebSocket(`ws://${location.host}`);
+        ws.addEventListener("message", msg => {
+            if (msg.data === "update") {
+                loadImages();
+            }
+        });
+        loadImages();
+    </script>
+
+</body>
+
+</html>
