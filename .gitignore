@@ -11,6 +11,7 @@ pnpm-debug.log*
 # Datos locales / sqlite
 data/
 *.db
+.txt
 
 # Sistema / editor
 .DS_Store
@@ -20,3 +21,11 @@ Thumbs.db
 # Builds
 dist/
 .cache/
+
+
+
+
+#URLs
+#https://console.cloud.google.com/iam-admin/serviceaccounts/details/118118653996633748905/keys?project=premiumcoffee-469802
+#https://docs.google.com/spreadsheets/d/1dO2qm4ulDETDWjuIIaSmpa7WTS5IjWE_75k6t6S8nXM/edit?hl=es&gid=0#gid=0
+#https://unsplash.com/es/s/fotos/moka-pot-coffee

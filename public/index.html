@@ -5,8 +5,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Premium Coffee</title>
-
-    <!-- Fuerza no-cache del HTML -->
     <meta http-equiv="Cache-Control" content="no-store" />
 
     <style>
@@ -39,7 +37,6 @@
             gap: 1rem;
             min-width: 0;
         }
-
         .logo {
             width: 50px;
             height: 50px;
@@ -47,22 +44,18 @@
             border-radius: 8px;
             object-fit: cover;
         }
-
         .site-name {
             margin: 0;
             color: #E6E6E6;
             font-size: 1.8rem;
             white-space: nowrap;
         }
-
-        /* === Nueva barra de búsqueda minimalista === */
         .search-actions {
             margin-left: auto;
             display: flex;
             align-items: center;
             gap: .5rem;
         }
-
         .icon-btn {
             display: inline-grid;
             place-items: center;
@@ -75,26 +68,20 @@
             cursor: pointer;
             transition: background .2s ease, transform .1s ease;
         }
-
         .icon-btn:hover {
             background: #2a2a2a;
         }
-
         .icon-btn:active {
             transform: scale(0.98);
         }
-
         .icon-btn svg {
             width: 20px;
             height: 20px;
             display: block;
         }
-
         .search-form {
             position: relative;
-            /* para que el input pueda animar ancho sin romper layout */
         }
-
         .search-form input {
             width: 0px;
             opacity: 0;
@@ -110,12 +97,9 @@
             font-size: 1rem;
             box-shadow: 0 0 0 1px rgba(255, 255, 255, .08) inset;
         }
-
         .search-form input::placeholder {
             color: #666;
         }
-
-        /* Al abrir búsqueda (por clase o por focus-within), expande */
         header.search-open .search-form input,
         .search-actions:focus-within .search-form input {
             width: min(60vw, 320px);
@@ -124,7 +108,6 @@
             pointer-events: auto;
         }
 
-        /* En móviles, al abrir búsqueda se oculta el nombre */
         @media (max-width: 600px) {
             header.search-open .site-name {
                 display: none;
@@ -149,30 +132,25 @@
             text-align: center;
             overflow: hidden;
         }
-
         .hero-overlay {
             position: absolute;
             inset: 0;
             background-color: rgba(0, 0, 0, 0.4);
             z-index: 1;
         }
-
         .hero-content {
             position: relative;
             z-index: 2;
             padding: 0 1rem;
         }
-
         .hero h2 {
             font-size: 3rem;
             margin-bottom: 1rem;
         }
-
         .hero p {
             font-size: 1.5rem;
             margin-bottom: 2rem;
         }
-
         .hero button {
             background-color: #0F0F0F;
             color: #E6E6E6;
@@ -183,12 +161,10 @@
             cursor: pointer;
             transition: transform .15s ease, background-color .2s ease;
         }
-
         .hero button:hover {
             background-color: #2A2A2A;
             transform: translateY(-1px);
         }
-
         .hero button:active {
             transform: translateY(0);
         }
@@ -202,7 +178,6 @@
             padding-top: 4rem;
             grid-template-columns: repeat(1, 1fr);
         }
-
         @media (min-width: 600px) {
             .gallery {
                 grid-template-columns: repeat(2, 1fr);
@@ -211,13 +186,11 @@
                 padding-top: 2rem;
             }
         }
-
         @media (min-width: 992px) {
             .gallery {
                 grid-template-columns: repeat(3, 1fr);
             }
         }
-
         .card {
             background-color: #C5A880;
             border-radius: 15px;
@@ -228,28 +201,23 @@
             box-shadow: 0 8px 20px rgba(0, 0, 0, .25);
             cursor: pointer;
         }
-
         .card:hover {
             transform: scale(1.03);
         }
-
         .card img {
             width: 100%;
             display: block;
             aspect-ratio: 4/3;
             object-fit: cover;
         }
-
         .card p {
             margin: .5rem 0;
         }
-
         .card p.name {
             margin: .75rem 0 0 0;
             font-weight: bold;
             text-transform: capitalize;
         }
-
         .card p.price {
             margin: 0 0 1rem 0;
             font-weight: 600;
@@ -279,11 +247,9 @@
             justify-content: center;
             z-index: 2000;
         }
-
         .modal-backdrop.open {
             display: flex;
         }
-
         .modal {
             background: #1d1d1d;
             color: #fff;
@@ -294,25 +260,21 @@
             display: grid;
             grid-template-columns: 1fr 1.2fr;
         }
-
         @media (max-width: 760px) {
             .modal {
                 grid-template-columns: 1fr;
             }
         }
-
         .modal img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
         }
-
         .modal-body {
             padding: 1rem 1.25rem 1.25rem;
             position: relative;
         }
-
         .modal-close {
             position: absolute;
             top: 8px;
@@ -322,21 +284,17 @@
             opacity: .8;
             user-select: none;
         }
-
         .modal-close:hover {
             opacity: 1;
         }
-
         .modal-body h3 {
             margin: .25rem 0 .5rem;
             font-size: 1.6rem;
         }
-
         .modal-body .price {
             font-weight: 700;
             margin: 0 0 .75rem;
         }
-
         .modal-body p.desc {
             margin: 0;
             opacity: .9;
@@ -352,7 +310,7 @@
             <h1 class="site-name">Premium Coffee</h1>
         </div>
 
-        <!-- NUEVA barra minimalista -->
+        <!-- Navbar -->
         <div class="search-actions">
             <form id="searchForm" class="search-form" role="search" onsubmit="event.preventDefault();">
                 <input type="search" id="search" placeholder="Search..." autocomplete="off" aria-label="Search catalog">
@@ -367,7 +325,7 @@
             </button>
         </div>
 
-        <!-- FAVICONS (puedes moverlos al <head> si quieres) -->
+        <!-- FAVICONS -->
         <link rel="icon" type="image/png" sizes="16x16" href="src/favicon_io/favicon-16x16.png">
         <link rel="icon" type="image/png" sizes="32x32" href="src/favicon_io/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="48x48" href="src/favicon_io/android-chrome-192x192.png">
@@ -432,8 +390,6 @@
 
     <!-- Catálogo desde /products + filtro + modal -->
     <script>
-        // console.log("Premium Coffee UI build: sheets+modal (preload & eager) + minimal search");
-
         const headerEl = document.getElementById("siteHeader");
         const searchToggle = document.getElementById("searchToggle");
         const searchForm = document.getElementById("searchForm");
@@ -444,7 +400,6 @@
             headerEl.classList.add("search-open");
             searchToggle.setAttribute("aria-expanded", "true");
             searchInput.focus();
-            // Selecciona el texto para buscar rápido si ya hay algo
             searchInput.select();
         }
         function closeSearch() {
@@ -461,13 +416,11 @@
             }
         });
 
-        // Clic fuera cierra
         document.addEventListener("click", (e) => {
             const isInside = headerEl.contains(e.target);
             if (!isInside) closeSearch();
         });
 
-        // Tecla Esc cierra
         window.addEventListener("keydown", (e) => {
             if (e.key === "Escape") closeSearch();
             // Atajo "/" para abrir y focusear (opcional)
@@ -478,7 +431,6 @@
         });
 
         const gallery = document.getElementById("gallery");
-
         const modalBackdrop = document.getElementById("modalBackdrop");
         const modalImg = document.getElementById("modalImg");
         const modalName = document.getElementById("modalName");
@@ -513,7 +465,7 @@
             return `images/${encodeURIComponent(val)}`;
         }
 
-        // --- Preload de imágenes para que el modal abra "instantáneo"
+        // --- Preload de imágenes
         const _preloaded = new Set();
         function preloadImage(src) {
             if (!src || _preloaded.has(src)) return;
@@ -600,6 +552,7 @@
             document.querySelectorAll("#no-results, #no-results-en").forEach(n => n.remove());
             if (count === 0) ensureNoResults("Sorry, we couldn't find any results.");
         }
+        
         // Filtrado reactivo
         searchInput.addEventListener("input", () => {
             applyFilter(searchInput.value.toLowerCase());

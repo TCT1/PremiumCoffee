@@ -1,0 +1,58 @@
+Funcionalidades descartadas temporalmente
+
+==== server.js ====
+// DB (Método SQLite no en uso)
+// let db;
+// async function initDB() {
+//     const dataDir = path.join(__dirname, "data");
+//     if (!fs.existsSync(dataDir)) fs.mkdirSync(dataDir, { recursive: true });
+
+//     db = await open({
+//         filename: path.join(dataDir, "database.db"),
+//         driver: sqlite3.Database
+//     });
+
+//     await db.exec(`
+//     CREATE TABLE IF NOT EXISTS products (
+//       id INTEGER PRIMARY KEY AUTOINCREMENT,
+//       name TEXT NOT NULL,
+//       image TEXT
+//     )
+//   `);
+// }
+// app.get("/images", async (req, res) => {
+//     const imagesFolder = path.join(publicPath, "images");
+//     console.log("[/images] reading folder:", imagesFolder);
+
+//     try {
+//         if (!fs.existsSync(imagesFolder)) {
+//             console.warn("[/images] folder does NOT exist");
+//             res.set("Cache-Control", "no-store");
+//             return res.json([]);
+//         }
+
+//         const files = await fs.promises.readdir(imagesFolder, { withFileTypes: true });
+//         const images = files
+//             .filter(f => f.isFile())
+//             .map(f => f.name)
+//             .filter(name => /\.(jpg|jpeg|png|gif|webp|avif)$/i.test(name));
+
+//         res.set("Cache-Control", "no-store");
+//         return res.json(images);
+//     } catch (err) {
+//         console.error("[/images] error:", err);
+//         res.set("Cache-Control", "no-store");
+//         return res.json([]);
+//     }
+// });
+// const imagesFolder = path.join(publicPath, "images");
+// if (fs.existsSync(imagesFolder)) {
+//     fs.watch(imagesFolder, { persistent: true }, (eventType, filename) => {
+//         if (filename) {
+//             console.log(`[watch] ${eventType}: ${filename}`);
+//             notifyClients();
+//         }
+//     });
+// } else {
+//     console.warn("WARNING: public/images no existe");
+// }
