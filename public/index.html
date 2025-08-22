@@ -2,9 +2,13 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Premium Coffee</title>
+
+    <!-- Fuerza no-cache del HTML -->
+    <meta http-equiv="Cache-Control" content="no-store" />
+
     <style>
         html {
             scroll-behavior: smooth;
@@ -12,7 +16,7 @@
 
         body {
             margin: 0;
-            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif, sans-serif;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
             background-color: #532E1C;
             color: #E6E6E6;
         }
@@ -26,6 +30,109 @@
             align-items: center;
             justify-content: space-between;
             z-index: 1000;
+            gap: 1rem;
+        }
+
+        .logo-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            min-width: 0;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background-color: #E6E6E6;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .site-name {
+            margin: 0;
+            color: #E6E6E6;
+            font-size: 1.8rem;
+            white-space: nowrap;
+        }
+
+        /* === Nueva barra de búsqueda minimalista === */
+        .search-actions {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: .5rem;
+        }
+
+        .icon-btn {
+            display: inline-grid;
+            place-items: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            border: none;
+            background: #fff;
+            color: #E6E6E6;
+            cursor: pointer;
+            transition: background .2s ease, transform .1s ease;
+        }
+
+        .icon-btn:hover {
+            background: #2a2a2a;
+        }
+
+        .icon-btn:active {
+            transform: scale(0.98);
+        }
+
+        .icon-btn svg {
+            width: 20px;
+            height: 20px;
+            display: block;
+        }
+
+        .search-form {
+            position: relative;
+            /* para que el input pueda animar ancho sin romper layout */
+        }
+
+        .search-form input {
+            width: 0px;
+            opacity: 0;
+            transform: translateX(6px);
+            pointer-events: none;
+            transition: width .25s ease, opacity .2s ease, transform .2s ease;
+            background: #fff;
+            color: #000;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            padding: 0.5rem 0.75rem;
+            font-size: 1rem;
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, .08) inset;
+        }
+
+        .search-form input::placeholder {
+            color: #666;
+        }
+
+        /* Al abrir búsqueda (por clase o por focus-within), expande */
+        header.search-open .search-form input,
+        .search-actions:focus-within .search-form input {
+            width: min(60vw, 320px);
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: auto;
+        }
+
+        /* En móviles, al abrir búsqueda se oculta el nombre */
+        @media (max-width: 600px) {
+            header.search-open .site-name {
+                display: none;
+            }
+
+            header {
+                gap: .5rem;
+            }
         }
 
         /* HERO */
@@ -45,10 +152,7 @@
 
         .hero-overlay {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             background-color: rgba(0, 0, 0, 0.4);
             z-index: 1;
         }
@@ -56,6 +160,7 @@
         .hero-content {
             position: relative;
             z-index: 2;
+            padding: 0 1rem;
         }
 
         .hero h2 {
@@ -74,50 +179,21 @@
             border: none;
             padding: 1rem 2rem;
             font-size: 1rem;
-            border-radius: 5px;
+            border-radius: 10px;
             cursor: pointer;
-            transition: background-color 0.2s;
+            transition: transform .15s ease, background-color .2s ease;
         }
 
         .hero button:hover {
             background-color: #2A2A2A;
+            transform: translateY(-1px);
         }
 
-        .logo-title {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
+        .hero button:active {
+            transform: translateY(0);
         }
 
-        .logo {
-            width: 50px;
-            height: 50px;
-            background-color: #E6E6E6;
-            border-radius: 8px;
-        }
-
-        h1 {
-            margin: 0;
-            color: #E6E6E6;
-            font-size: 1.8rem;
-        }
-
-        .search-container {
-            flex: 1;
-            margin-left: 2rem;
-            display: flex;
-            justify-content: flex-end;
-        }
-
-        .search-container input {
-            padding: 0.5rem 1rem;
-            font-size: 1rem;
-            border-radius: 5px;
-            border: none;
-            max-width: 300px;
-            width: 100%;
-        }
-
+        /* GALLERY */
         .gallery {
             display: grid;
             gap: 1rem;
@@ -149,6 +225,8 @@
             text-align: center;
             color: #000;
             transition: transform 0.2s;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, .25);
+            cursor: pointer;
         }
 
         .card:hover {
@@ -158,12 +236,23 @@
         .card img {
             width: 100%;
             display: block;
+            aspect-ratio: 4/3;
+            object-fit: cover;
         }
 
         .card p {
-            margin: 0.5rem 0;
+            margin: .5rem 0;
+        }
+
+        .card p.name {
+            margin: .75rem 0 0 0;
             font-weight: bold;
             text-transform: capitalize;
+        }
+
+        .card p.price {
+            margin: 0 0 1rem 0;
+            font-weight: 600;
         }
 
         footer {
@@ -173,26 +262,118 @@
             padding: 1rem 0;
             margin-top: 2rem;
         }
+
+        #no-results {
+            text-align: center;
+            color: #fff;
+            margin-top: 1rem;
+        }
+
+        /* MODAL */
+        .modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .modal-backdrop.open {
+            display: flex;
+        }
+
+        .modal {
+            background: #1d1d1d;
+            color: #fff;
+            width: min(900px, 92vw);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, .5);
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+        }
+
+        @media (max-width: 760px) {
+            .modal {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .modal img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .modal-body {
+            padding: 1rem 1.25rem 1.25rem;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 8px;
+            right: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            opacity: .8;
+            user-select: none;
+        }
+
+        .modal-close:hover {
+            opacity: 1;
+        }
+
+        .modal-body h3 {
+            margin: .25rem 0 .5rem;
+            font-size: 1.6rem;
+        }
+
+        .modal-body .price {
+            font-weight: 700;
+            margin: 0 0 .75rem;
+        }
+
+        .modal-body p.desc {
+            margin: 0;
+            opacity: .9;
+            line-height: 1.4;
+        }
     </style>
 </head>
 
 <body>
-
-    <header>
+    <header id="siteHeader">
         <div class="logo-title">
-            <img src="src/iconDark.png" class="logo">
-            <h1>Premium Coffee</h1>
+            <img src="src/iconDark.png" class="logo" alt="Logo">
+            <h1 class="site-name">Premium Coffee</h1>
         </div>
-        <div class="search-container">
-            <input type="text" id="search" placeholder="Search...">
+
+        <!-- NUEVA barra minimalista -->
+        <div class="search-actions">
+            <form id="searchForm" class="search-form" role="search" onsubmit="event.preventDefault();">
+                <input type="search" id="search" placeholder="Search..." autocomplete="off" aria-label="Search catalog">
+            </form>
+            <button id="searchToggle" class="icon-btn" aria-label="Open search" aria-expanded="false"
+                aria-controls="search">
+                <!-- ícono lupa -->
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path
+                        d="M15.5 14h-.79l-.28-.27a6.471 6.471 0 0 0 1.57-4.23 6.5 6.5 0 1 0-6.5 6.5 6.471 6.471 0 0 0 4.23-1.57l.27.28v.79l5 5 1.5-1.5-5-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+                </svg>
+            </button>
         </div>
+
+        <!-- FAVICONS (puedes moverlos al <head> si quieres) -->
         <link rel="icon" type="image/png" sizes="16x16" href="src/favicon_io/favicon-16x16.png">
         <link rel="icon" type="image/png" sizes="32x32" href="src/favicon_io/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="48x48" href="src/favicon_io/android-chrome-192x192.png">
         <link rel="icon" type="image/png" sizes="96x96" href="src/favicon_io/android-chrome-512x512.png">
         <link rel="apple-touch-icon" sizes="180x180" href="src/favicon_io/apple-touch-icon.png">
         <link rel="shortcut icon" href="src/favicon_io/favicon-32x32.png" type="image/png">
-
     </header>
 
     <!-- HERO -->
@@ -205,13 +386,13 @@
         </div>
     </section>
 
-
     <div class="gallery" id="gallery"></div>
 
     <footer>
         <p>&copy; 2025 Premium Coffee. All rights reserved.</p>
     </footer>
 
+    <!-- Scroll suave -->
     <script>
         const btnCatalogo = document.getElementById('btnCatalogo');
         btnCatalogo.addEventListener('click', () => {
@@ -219,7 +400,7 @@
             const targetPosition = gallery.getBoundingClientRect().top + window.pageYOffset;
             const startPosition = window.pageYOffset;
             const distance = targetPosition - startPosition;
-            const duration = 1200; // duración en ms
+            const duration = 1200;
             let start = null;
 
             function step(timestamp) {
@@ -227,82 +408,234 @@
                 const progress = timestamp - start;
                 const percent = Math.min(progress / duration, 1);
                 window.scrollTo(0, startPosition + distance * easeInOutCubic(percent));
-                if (progress < duration) {
-                    window.requestAnimationFrame(step);
-                }
+                if (progress < duration) window.requestAnimationFrame(step);
             }
-
-            function easeInOutCubic(t) {
-                return t < 0.5
-                    ? 4 * t * t * t
-                    : 1 - Math.pow(-2 * t + 2, 3) / 2;
-            }
-
+            function easeInOutCubic(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
             window.requestAnimationFrame(step);
         });
     </script>
 
+    <!-- MODAL -->
+    <div id="modalBackdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+        <div class="modal">
+            <div class="modal-left">
+                <img id="modalImg" alt="">
+            </div>
+            <div class="modal-body">
+                <div id="modalClose" class="modal-close" title="Close">✕</div>
+                <h3 id="modalName"></h3>
+                <div id="modalPrice" class="price"></div>
+                <p id="modalDesc" class="desc"></p>
+            </div>
+        </div>
+    </div>
 
+    <!-- Catálogo desde /products + filtro + modal -->
     <script>
-        const gallery = document.getElementById("gallery");
+        // console.log("Premium Coffee UI build: sheets+modal (preload & eager) + minimal search");
+
+        const headerEl = document.getElementById("siteHeader");
+        const searchToggle = document.getElementById("searchToggle");
+        const searchForm = document.getElementById("searchForm");
         const searchInput = document.getElementById("search");
 
-        //LOAD FROM SERVER
-        async function loadImages() {
-            const res = await fetch("/images");
-            const images = await res.json();
-            renderGallery(images);
+        // === Toggle del buscador ===
+        function openSearch() {
+            headerEl.classList.add("search-open");
+            searchToggle.setAttribute("aria-expanded", "true");
+            searchInput.focus();
+            // Selecciona el texto para buscar rápido si ya hay algo
+            searchInput.select();
+        }
+        function closeSearch() {
+            headerEl.classList.remove("search-open");
+            searchToggle.setAttribute("aria-expanded", "false");
         }
 
-        function renderGallery(images) {
+        searchToggle.addEventListener("click", () => {
+            const isOpen = headerEl.classList.contains("search-open");
+            if (isOpen) {
+                closeSearch();
+            } else {
+                openSearch();
+            }
+        });
+
+        // Clic fuera cierra
+        document.addEventListener("click", (e) => {
+            const isInside = headerEl.contains(e.target);
+            if (!isInside) closeSearch();
+        });
+
+        // Tecla Esc cierra
+        window.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") closeSearch();
+            // Atajo "/" para abrir y focusear (opcional)
+            if (e.key === "/" && !e.ctrlKey && !e.metaKey && !e.altKey) {
+                e.preventDefault();
+                openSearch();
+            }
+        });
+
+        const gallery = document.getElementById("gallery");
+
+        const modalBackdrop = document.getElementById("modalBackdrop");
+        const modalImg = document.getElementById("modalImg");
+        const modalName = document.getElementById("modalName");
+        const modalPrice = document.getElementById("modalPrice");
+        const modalDesc = document.getElementById("modalDesc");
+        const modalClose = document.getElementById("modalClose");
+
+        // === Helpers de imagen con PROXY ===
+        function extractDriveId(val) {
+            if (!val) return "";
+            if (/^[\w-]{10,}$/.test(val)) return val;
+            try {
+                const u = new URL(val);
+                if (!u.hostname.includes("drive.google.com")) return "";
+                const m = u.pathname.match(/\/file\/d\/([^/]+)\//);
+                if (m && m[1]) return m[1];
+                const id = u.searchParams.get("id");
+                if (id) return id;
+            } catch { }
+            return "";
+        }
+
+        function getImageSrc(image) {
+            const val = (image || "").trim();
+            if (!val) return "";
+            const isUrl = /^https?:\/\//i.test(val);
+            if (isUrl) {
+                const id = extractDriveId(val);
+                if (id) return `/img/${id}`;
+                return val;
+            }
+            return `images/${encodeURIComponent(val)}`;
+        }
+
+        // --- Preload de imágenes para que el modal abra "instantáneo"
+        const _preloaded = new Set();
+        function preloadImage(src) {
+            if (!src || _preloaded.has(src)) return;
+            const img = new Image();
+            img.referrerPolicy = "no-referrer";
+            img.src = src;
+            _preloaded.add(src);
+        }
+
+        const fmt = (n) => Number(n || 0).toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 2 });
+
+        async function loadProducts() {
+            try {
+                const res = await fetch(`/products?ts=${Date.now()}`);
+                if (!res.ok) throw new Error("GET /products failed: " + res.status);
+                const products = await res.json();
+                // console.log("[products] sample srcs:", products.slice(0, 3).map(p => getImageSrc(p.image)));
+                renderGallery(products);
+                applyFilter(searchInput.value.trim().toLowerCase());
+            } catch (e) {
+                console.error("loadProducts error:", e);
+                renderGallery([]);
+                ensureNoResults("Sorry, we couldn't load the catalog.");
+            }
+        }
+
+        function renderGallery(items) {
             gallery.innerHTML = "";
-            images.forEach(img => {
-                const name = img.replace(/\.[^/.]+$/, ""); //REMOVE IMAGE EXTENSION
+            items.forEach((prod, idx) => {
+                const src = getImageSrc(prod.image);
+                const name = prod.name || "";
+                const priceTxt = fmt(prod.price);
+
                 const card = document.createElement("div");
                 card.classList.add("card");
-                card.innerHTML = `<img src="images/${img}" alt="${name}"><p>${name}</p>`;
+
+                const imgEl = document.createElement("img");
+                imgEl.loading = idx < 6 ? "eager" : "lazy";
+                imgEl.decoding = "async";
+                imgEl.referrerPolicy = "no-referrer";
+                imgEl.alt = name;
+                imgEl.src = src;
+                imgEl.addEventListener("error", () => {
+                    console.warn("Image failed to load:", src);
+                });
+
+                const nameEl = document.createElement("p");
+                nameEl.className = "name";
+                nameEl.textContent = name;
+
+                const priceEl = document.createElement("p");
+                priceEl.className = "price";
+                priceEl.textContent = priceTxt;
+
+                card.addEventListener("mouseenter", () => preloadImage(src));
+                card.addEventListener("click", () => openModal(prod, src));
+
+                card.appendChild(imgEl);
+                card.appendChild(nameEl);
+                card.appendChild(priceEl);
                 gallery.appendChild(card);
             });
         }
 
-        //FILTER
-        searchInput.addEventListener("input", () => {
-            const query = searchInput.value.toLowerCase();
-            let anyVisible = false; // para saber si alguna tarjeta coincide
+        function ensureNoResults(message) {
+            document.querySelectorAll("#no-results, #no-results-en").forEach(n => n.remove());
+            const p = document.createElement("p");
+            p.id = "no-results-en";
+            p.style.textAlign = "center";
+            p.style.color = "#fff";
+            p.style.marginTop = "1rem";
+            p.textContent = message || "Sorry, we couldn't find any results.";
+            gallery.parentNode.insertBefore(p, gallery.nextSibling);
+        }
 
-            document.querySelectorAll(".card").forEach(card => {
-                const name = card.querySelector("p").textContent.toLowerCase();
-                if (name.includes(query)) {
-                    card.style.display = "block";
-                    anyVisible = true;
-                } else {
-                    card.style.display = "none";
-                }
+        function applyFilter(q) {
+            let count = 0;
+            Array.from(gallery.children).forEach(card => {
+                const name = card.querySelector(".name").textContent.toLowerCase();
+                const match = name.includes(q);
+                card.style.display = match ? "block" : "none";
+                if (match) count++;
             });
-
-            // Mostrar mensaje si no hay coincidencias
-            let noResults = document.getElementById("no-results");
-            if (!noResults) {
-                noResults = document.createElement("p");
-                noResults.id = "no-results";
-                noResults.style.textAlign = "center";
-                noResults.style.color = "#fff"; // o el color que quieras
-                noResults.style.marginTop = "1rem";
-                gallery.parentNode.insertBefore(noResults, gallery.nextSibling);
-            }
-
-            noResults.textContent = anyVisible ? "" : "No se encontraron productos que coincidan con tu búsqueda.";
+            document.querySelectorAll("#no-results, #no-results-en").forEach(n => n.remove());
+            if (count === 0) ensureNoResults("Sorry, we couldn't find any results.");
+        }
+        // Filtrado reactivo
+        searchInput.addEventListener("input", () => {
+            applyFilter(searchInput.value.toLowerCase());
         });
-        //AUTO UPDATE 
-        const ws = new WebSocket(`ws://${location.host}`);
-        ws.addEventListener("message", msg => {
-            if (msg.data === "update") {
-                loadImages();
-            }
-        });
-        loadImages();
+
+        function openModal(prod, srcFromCard) {
+            modalImg.referrerPolicy = "no-referrer";
+            modalImg.src = srcFromCard || getImageSrc(prod.image);
+            modalImg.alt = prod.name || "";
+            modalName.textContent = prod.name || "";
+            modalPrice.textContent = fmt(prod.price);
+            modalDesc.textContent = prod.description || "";
+            modalBackdrop.classList.add("open");
+            modalBackdrop.setAttribute("aria-hidden", "false");
+        }
+        function closeModal() {
+            modalBackdrop.classList.remove("open");
+            modalBackdrop.setAttribute("aria-hidden", "true");
+        }
+        document.getElementById("modalClose").addEventListener("click", closeModal);
+        document.getElementById("modalBackdrop").addEventListener("click", (e) => { if (e.target === modalBackdrop) closeModal(); });
+        window.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
+
+        // Inicial + auto-refresh cada 60s
+        loadProducts();
+        setInterval(loadProducts, 60000);
     </script>
 
+    <!-- Socket.io: si agregas imágenes locales, refresca la vista -->
+    <script src="/socket.io/socket.io.js?v=2"></script>
+    <script>
+        const socket = io({ transports: ['polling'], upgrade: false, timeout: 20000 });
+        socket.on("connect", () => console.log("[io] connected (polling):", socket.id));
+        socket.on("update", () => { console.log("[io] update -> reload products"); loadProducts(); });
+        socket.on("disconnect", (reason) => console.warn("[io] disconnected:", reason));
+    </script>
 </body>
 
 </html>
